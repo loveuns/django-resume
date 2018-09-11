@@ -1,0 +1,4 @@
+# Django Resume
+
+private contents
+

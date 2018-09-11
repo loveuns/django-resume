@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<!-- Page Heading -->
+<div class="d-flex">
+  <h1 class="my-4">Portfolio list</h1>
+  <p class="ml-3 align-self-center">공부하면서 만든 습작들 업로드하는 공간</p>
+</div>
+
+<!-- Project -->
+{% load static %}
+{% for post in object_list %}
+<div class="row bg-secondary text-white rounded p-4 mx-1 mb-3">
+  <div class="col-md-7">
+    <a href="#">
+      <img class="img-fluid rounded mb-md-0" src="{{post.photo.url}}" alt="">
+    </a>
+  </div>
+  <div class="col-md-5">
+    <h3 class="text-white">{{post.title}}</h3>
+    <p>{{post.text|linebreaksbr}}</p>
+    <a class="btn btn-info m-1" href="{{post.githublink}}" target="_blank">View Github</a>
+    {% if post.servicelink %}
+    <a class="btn btn-info m-1" href="{{post.servicelink}}" target="_blank">Run Service</a>
+    {% endif %}
+  </div>
+</div>
+{% endfor %}
+
+<div class="border border-secondary rounded align-self-center my-2 mx-1 p-3">
+  {% load tagging_tags %}
+  {% tag_cloud_for_model resume.Portfolio as tags %}
+  {% for tag in tags %}
+  <a class="pl-1" href="{% url 'resume:portfolio_tag' tag=tag.name %}">
+    #{{tag.name}}</a>
+  {% endfor %}
+</div>
+
+{% endblock %}
